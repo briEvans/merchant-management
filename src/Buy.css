@@ -1,0 +1,11 @@
+.container-buy {
+  background-color: #155674;
+  position: relative;
+  color: white;
+  height: 100%;
+  width: 100%;
+
+  padding: 10rem;
+  z-index: 998;
+  transition: ease-in all 1s;
+}

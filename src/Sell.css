@@ -1,0 +1,11 @@
+.container-sell {
+  background-color: #60BEB3;
+  display: inline-block;
+  width: 18%;
+  height: 150%;
+  transition: all .2s ease-in-out;
+
+  padding: 10rem;
+  z-index: 998;
+  transition: ease-in all 1s;
+}
