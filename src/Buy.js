@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ProductItem from './ProductItem';
 import AddProduct from './AddProduct';
+import { withStore } from '@spyna/react-store'
 
 import './App.css';
 import './Buy.css';
@@ -16,17 +17,17 @@ class Buy extends Component {
     this.state = {
       products: props.products,
       isLoaded: false,
+      revenue: props.revenue
     };
+    console.log('prps: ', props);
+
     this.getProducts = props.getProducts.bind(this);
+
     this.onAdd = this.onAdd.bind(this);
   };
 
-  // Read from Database
-  componentDidMount() {
-    this.getProducts();
-  };
-
   onAdd(quantity) {
+    let rev = this.props.store.get('revenue') - quantity*0.25;
     let date = new Date();
     let today = date.getFullYear() +
     '-' + `${date.getMonth() + 1}`.padStart(2, 0) +
@@ -46,20 +47,26 @@ class Buy extends Component {
         })
     }).then(res => {
       this.getProducts();
+      console.log('setting to: ',rev);
+      console.log('in buy', this.props);
+      this.props.store.set('revenue', rev);
     });
   };
 
   render() {
     return (
       <div className="container-buy">
-        <h2>Manage Stock</h2>
-        <h3>Keep track of your stock and buy more from your supplier</h3>
+        <h2>Buy from your supplier</h2>
+        <span>Inventory Items: {this.state.products.length}</span>{' | '}
+        <span>Revenue: ${this.props.store.get('revenue')}</span>
+
         {
           <AddProduct
             onAdd={this.onAdd}
             getProducts={this.getProducts}
           />
         }
+        <div className="items">
           {
             this.state.products.length > 0 ? (
                 this.state.products.map(product => {
@@ -75,9 +82,10 @@ class Buy extends Component {
               ) :
               (<h4> You do not have any items in stock</h4>)
             }
+            </div>
       </div>
     );
   }
 }
 
-export default Buy;
+export default withStore(Buy);

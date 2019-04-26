@@ -4,14 +4,13 @@ html, body {
   color: white;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   font-family: Helvetica, Arial, Sans-Serif;
   font-weight: 400;
 }
 
 header {
   display: block;
-  background-color: #282828;
+  border-bottom: 1px solid white;
   height: 4rem;
   z-index: 999;
   width: 100%;
@@ -46,4 +45,44 @@ ul > li {
 button {
   border-radius: 0.25rem;
   height: 2rem;
+}
+
+.item {
+  display: block;
+  color: gray;
+  border: 1px solid gray;
+
+  margin: 0.25rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  width: 50rem;
+}
+
+.col {
+  display: block;
+  margin-right: 1rem;
+  padding-right: 0.5rem;
+  border-right: 1px solid gray;
+
+}
+
+.items {
+  height: 25rem;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  border-top: 1px solid gray;
+}
+
+input {
+  width: 5rem;
+  padding: 0.5rem  0.5rem;
+  margin:  0.5rem;
+}
+
+.green {
+  color: green;
+}
+
+.btn-sell {
+  float: right;
 }

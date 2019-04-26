@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
 
+import { createStore } from '@spyna/react-store'
+
 import Home from './Home';
 import Buy from './Buy';
 import Sell from './Sell';
 import Analytics from './Analytics';
 
 const getAllItemsRoute = 'http://localhost:8080/api/bananas';
+const StoreContext = React.createContext();
 
  class App extends Component {
    constructor(props) {
@@ -16,13 +19,16 @@ const getAllItemsRoute = 'http://localhost:8080/api/bananas';
      this.state = {
        products: [],
        isLoaded: false,
-       localStorageMode: false,
-       revenue: 0
+       localStorageMode: false
      };
-
+     console.log('props:', props);
      this.getProducts = this.getProducts.bind(this);
    };
 
+   componentWillMount() {
+     const products = this.getProducts();
+     this.setState({ products });
+   };
    getProducts() {
      return fetch(getAllItemsRoute)
            .then(res => res.json())
@@ -65,11 +71,14 @@ render() {
             component={ () => <Buy
               products={this.state.products}
               revenue={this.state.revenue}
-              getProducts={this.getProducts}/>}
+              getProducts={this.getProducts}
+              />}
           />
-        <Route path="/sell" component={ () => <Sell
+          <Route path="/sell" component={ () => <Sell
             products={this.state.products}
-            revenue={this.state.revenue}/>}
+            revenue={this.state.revenue}
+            getProducts={this.getProducts}
+            />}
             />
           <Route path="/analytics" component={Analytics} />
 
@@ -79,5 +88,8 @@ render() {
   }
 }
 
+const initVal = {
+  revenue: 0
+}
 
-export default App;
+export default createStore(App, initVal);

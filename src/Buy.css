@@ -1,11 +1,16 @@
 .container-buy {
-  background-color: #155674;
+  display: inline-block;
   position: relative;
-  color: white;
-  height: 100%;
-  width: 100%;
-
-  padding: 10rem;
-  z-index: 998;
+  color: black;
+  opacity: 0.8;
+  background-color: white;
+  padding: 2rem;
+  top: 10rem;
+  left: 20%;
+  height: 25rem;
   transition: ease-in all 1s;
+  overflow: hidden;
+  z-index: 998;
+  width: 50rem;
+
 }

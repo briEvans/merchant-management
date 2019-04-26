@@ -1,106 +1,64 @@
 import React, { Component } from 'react';
 import ProductItem from './ProductItem';
 import AddProduct from './AddProduct';
+import { withStore } from '@spyna/react-store'
 
 import './App.css';
 import './Sell.css';
 
-const products = [
-  {
-    name: 'iPad',
-    price: 200
-  },
-  {
-    name: 'iPhone',
-    price: 650
-  }
-];
-
-localStorage.setItem('products', JSON.stringify(products));
-
 class Sell extends Component {
   constructor(props) {
     super(props);
+    console.log('props: sell: ', props);
 
     this.state = {
-      products: JSON.parse(localStorage.getItem('products'))
+      products: Array.from(props.products),
+      isLoaded: false
     };
-
-    this.onDelete = this.onDelete.bind(this);
-    this.onAdd = this.onAdd.bind(this);
-    this.onEditSubmit = this.onEditSubmit.bind(this);
-
+    console.log('props: sell: ', props);
+    this.getProducts = props.getProducts.bind(this);
+    this.onSell = this.onSell.bind(this);
   };
 
-  // Read from Database
-  componentWillMount() {
-    const products = this.getProducts();
-    this.setState({ products });
+  componentDidMount () {
+    this.setState({isLoaded: true});
+  }
+
+  onSell(ev) {
+
+    let rev = this.props.store.get('revenue') + 0.35;
+    this.props.store.set('revenue', rev);
   };
-
-  getProducts() {
-    return this.state.products;
-  };
-
-  onDelete(name) {
-    const products = this.getProducts();
-
-    const filteredProducts = products.filter(product => {
-      return product.name !== name;
-    })
-
-    this.setState({ products: filteredProducts});
-  };
-
-  onAdd(name, price) {
-    const products = this.getProducts();
-
-    products.push({name, price});
-    this.setState({ products });
-  };
-
-  onEditSubmit(name, price, originalName) {
-    let products = this.getProducts();
-
-    products = products.map(product => {
-      if (product.name === originalName) {
-        product.name = name;
-        product.price = price;
-      }
-
-    return product;
-  });
-  this.setState({ products });
-};
 
 
   render() {
     return (
       <div className="container-sell">
-        <h2>Manage Sales</h2>
-        <h3>Keep track of your sales</h3>
+        <h2>Track your sales</h2>
+          <span>Inventory Items: {this.state.products.length}</span>{' | '}
+          <span>Revenue: $  {this.props.store.get('revenue')}</span>
+        <div className="items">
+          {
+            this.state.products.length > 0 ? (
+                this.state.products.map(product => {
+                  return (
+                    <ProductItem
+                      key={product.id}
+                      id={product.id}
+                      buyDate={product.buyDate}
+                      sellDate={product.sellDate}
+                      button=<button className="btn-sell" onClick={this.onSell}>Sell</button>
 
-        <AddProduct
-          onAdd={this.onAdd}
-        />
-        <h2>Products Available</h2>
-        {
-          this.state.products.map(product => {
-            return (
-              <ProductItem
-                key={product.name}
-                name={product.name}
-                price={product.price}
-                onDelete={this.onDelete}
-                onEditSubmit={this.onEditSubmit}
-
-              />
-            )
-          })
-        }
+                    />
+                  )
+                })
+              ) :
+              (<h4> You do not have any items in stock</h4>)
+            }
+        </div>
       </div>
     );
   }
 }
 
-export default Sell;
+export default withStore(Sell);

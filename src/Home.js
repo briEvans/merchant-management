@@ -17,12 +17,7 @@ class Home extends Component {
 
     render() {
       return (
-              <div>
-                <div className="container">
-                  <div className="home-buy-container"></div>
-                  <div className="home-sell-container"></div>
-                  <div className="home-analytics-container"></div>
-                </div>
+              <div className="container">>
             </div>
           );
         }
