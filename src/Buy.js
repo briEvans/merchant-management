@@ -8,18 +8,14 @@ import './Buy.css';
 
 const buyFromSupplierRoute = 'http://localhost:8080/api/bananas';
 
-// localStorage.setItem('products', JSON.stringify(products));
-
 class Buy extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       products: props.products,
-      isLoaded: false,
-      revenue: props.revenue
-    };
-    console.log('prps: ', props);
+      isLoaded: false
+        };
 
     this.getProducts = props.getProducts.bind(this);
 
@@ -27,6 +23,10 @@ class Buy extends Component {
   };
 
   onAdd(quantity) {
+
+    if (quantity < 1) {
+      alert('Must choose a quantity < 0');
+    } else {
     let rev = this.props.store.get('revenue') - quantity*0.25;
     let date = new Date();
     let today = date.getFullYear() +
@@ -47,25 +47,26 @@ class Buy extends Component {
         })
     }).then(res => {
       this.getProducts();
-      console.log('setting to: ',rev);
-      console.log('in buy', this.props);
       this.props.store.set('revenue', rev);
     });
+  }
   };
 
   render() {
     return (
-      <div className="container-buy">
-        <h2>Buy from your supplier</h2>
-        <span>Inventory Items: {this.state.products.length}</span>{' | '}
-        <span>Revenue: ${this.props.store.get('revenue')}</span>
-
-        {
-          <AddProduct
-            onAdd={this.onAdd}
-            getProducts={this.getProducts}
-          />
-        }
+      <div className="container">
+        <div className="container-center">
+        <div className="container-header">
+          <h2>Buy from your supplier</h2>
+          <span>Inventory Items: {this.state.products.length}</span>{' | '}
+          <span>Revenue: ${this.props.store.get('revenue')}</span>
+      </div>
+      {
+        <AddProduct
+          onAdd={this.onAdd}
+          getProducts={this.getProducts}
+        />
+      }
         <div className="items">
           {
             this.state.products.length > 0 ? (
@@ -83,6 +84,7 @@ class Buy extends Component {
               (<h4> You do not have any items in stock</h4>)
             }
             </div>
+          </div>
       </div>
     );
   }

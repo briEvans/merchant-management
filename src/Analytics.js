@@ -1,104 +1,44 @@
 import React, { Component } from 'react';
-import ProductItem from './ProductItem';
 import AddProduct from './AddProduct';
+import { withStore } from '@spyna/react-store'
 
 import './App.css';
 import './Analytics.css';
-
-const products = [
-  {
-    name: 'iPad',
-    price: 200
-  },
-  {
-    name: 'iPhone',
-    price: 650
-  }
-];
-
-localStorage.setItem('products', JSON.stringify(products));
 
 class Analytics extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      products: JSON.parse(localStorage.getItem('products'))
+      products: props.products,
+      expiredProducts: props.store.get('expiredProducts'),
+      sold: props.store.get('sold'),
+      revenue: props.store.get('revenue'),
+      isLoaded: false
     };
 
-    this.onDelete = this.onDelete.bind(this);
-    this.onAdd = this.onAdd.bind(this);
-    this.onEditSubmit = this.onEditSubmit.bind(this);
-
+    this.getProducts = props.getProducts.bind(this);
   };
-
-  // Read from Database
-  componentWillMount() {
-    const products = this.getProducts();
-    this.setState({ products });
-  };
-
-  getProducts() {
-    return this.state.products;
-  };
-
-  onDelete(name) {
-    const products = this.getProducts();
-
-    const filteredProducts = products.filter(product => {
-      return product.name !== name;
-    })
-
-    this.setState({ products: filteredProducts});
-  };
-
-  onAdd(name, price) {
-    const products = this.getProducts();
-
-    products.push({name, price});
-    this.setState({ products });
-  };
-
-  onEditSubmit(name, price, originalName) {
-    let products = this.getProducts();
-
-    products = products.map(product => {
-      if (product.name === originalName) {
-        product.name = name;
-        product.price = price;
-      }
-
-    return product;
-  });
-  this.setState({ products });
-};
 
 
   render() {
     return (
-      <div className="container-analytics">
-        <h2>Manage Stock</h2>
-        <h3>Keep track of your stock and Analytics more from your supplier</h3>
-        <AddProduct
-          onAdd={this.onAdd}
-        />
-        {
-          this.state.products.map(product => {
-            return (
-              <ProductItem
-                key={product.name}
-                name={product.name}
-                price={product.price}
-                onDelete={this.onDelete}
-                onEditSubmit={this.onEditSubmit}
-
-              />
-            )
-          })
-        }
+      <div className="container">
+        <div className="container-center">
+          <div className="container-header">
+            <h2>Analytics</h2>
+          </div>
+          <div className="items">
+            <div className="stat">Unexpired Products: <span className="number">{this.state.products.length - this.props.store.get('expiredProducts')}</span></div>
+            <div className="stat">Expired Products: <span className="number">{this.state.expiredProducts}</span></div>
+            <div className="stat">Sold: <span className="number">{this.state.sold}</span> </div>
+            <div className="stat">Losses from Expired: <span className="number">${this.state.expiredProducts*0.35}</span></div>
+            <div className="stat">Net Revenue: <span className="number">${this.state.revenue}</span></div>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-export default Analytics;
+export default withStore(Analytics);

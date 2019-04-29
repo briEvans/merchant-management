@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class AddProduct extends Component {
+class SellProduct extends Component {
   constructor(props) {
     super(props);
 
@@ -10,7 +10,7 @@ class AddProduct extends Component {
 
   onSubmit(ev) {
     ev.preventDefault();
-    this.props.onAdd(this.quantityInput.value);
+    this.props.onSell(this.quantityInput.value, this.quantityInput.value);
     this.quantityInput.value = "";
   };
 
@@ -24,11 +24,11 @@ class AddProduct extends Component {
             placeholder="Quantity"
             ref={quantityInput => {this.quantityInput = quantityInput}}
             />
-      <button>Add Product</button>
+          <button>Sell Product</button>
       </form>
       </div>
     );
   }
 }
 
-export default AddProduct;
+export default SellProduct;

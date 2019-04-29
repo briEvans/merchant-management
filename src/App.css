@@ -8,21 +8,31 @@ html, body {
   font-weight: 400;
 }
 
+body.noScroll { /* ...or body.dialogShowing */
+  overflow: hidden;
+}
+
 header {
   display: block;
-  border-bottom: 1px solid white;
+  background-color: #303030;
   height: 4rem;
   z-index: 999;
   width: 100%;
   position: fixed;
   text-align: center;
   top: 0;
+  font-weight: 500;
 }
+
+h1 {
+  font-size: 1.5rem;
+  display: inline-block;
+}
+
 
 ul > li {
   display: inline-block;
   list-style: none;
-  float: left;
   margin-right: 0.5rem;
 }
 
@@ -32,45 +42,74 @@ ul > li {
   color: white;
 }
 
-.shrink {
-  width: 25%;
-  transform: all ease-in 1s;
-}
-
-.stretch {
-  width: 120%;
-  transform: all ease-in 1s;
-}
 
 button {
   border-radius: 0.25rem;
   height: 2rem;
 }
 
+.container {
+  position: absolute;
+  color: black;
+  transition: ease-in all 1s;
+  overflow: hidden;
+  z-index: 998;
+  width: 100%;
+  heigth: 100%;
+  text-align: center;
+  top: 0;
+  left: 0;
+}
+
+.container-center {
+  display: inline-block;
+  margin: 0 auto;
+  text-align: left;
+  padding-top: 7rem;
+}
+
+.container-header {
+  display: inline-block;
+
+}
+
+.container-header h2 {
+  text-transform: uppercase;
+  margin-bottom: -1.5rem;
+  height: 4rem;
+  overflow: hidden;
+}
+
+
 .item {
-  display: block;
+  display: inline-block;
   color: gray;
   border: 1px solid gray;
 
   margin: 0.25rem;
   padding: 0.5rem;
-  border-radius: 0.25rem;
+  border-radius: 0.15rem;
+  background-color: white;
+  opacity: 0.8;
   width: 50rem;
+  text-align: left;
 }
 
 .col {
   display: block;
   margin-right: 1rem;
   padding-right: 0.5rem;
-  border-right: 1px solid gray;
-
 }
 
 .items {
-  height: 25rem;
-  overflow-x: hidden;
+  height: 30rem;
+  display: block;
+  opacity: 0.9;
+  overflow-x: visible;
   overflow-y: scroll;
-  border-top: 1px solid gray;
+  border-top: 1px solid #303030;
+  position: relative;
+  top: 50%;
 }
 
 input {
@@ -83,6 +122,30 @@ input {
   color: green;
 }
 
-.btn-sell {
-  float: right;
+.red {
+  color: red;
+}
+
+.add-product {
+  display: inline-block;
+  left: 14.5rem;
+  position: relative;
+}
+
+.stat {
+  display: inline-block;
+  width: 10rem;
+  height: 10rem;
+  opacity: 0.7;
+  background-color: white;
+  font-size: 0.85rem;
+  padding: 1rem;
+  margin: 1rem;
+  overlow: hidden;
+}
+
+.number {
+  display: block;
+  font-size: 3rem;
+  font-weight: 600;
 }

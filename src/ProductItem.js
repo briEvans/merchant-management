@@ -14,12 +14,12 @@ class ProductItem extends Component {
 
     return (
       <div>
-      <div className="item">
-      <span className="col">{id}</span>
-      <b>Buy Date:</b> {buyDate} {' | '}
-      {sellDate ? <div className="red"> sold on sellDate</div> : <div className="green">In Stock</div>}
-      {this.state.button}
-      </div>
+        <div className="item">
+        <span className="col">{id}</span>
+        <b>Buy Date:</b> {buyDate} {' | '}
+        {sellDate ? <div className="red"> Sold on {sellDate}</div> : <span className="green">In Stock</span>}
+        {this.state.button}
+        </div>
       </div>
     );
   }
