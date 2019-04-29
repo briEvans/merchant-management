@@ -6,12 +6,13 @@ import { withStore } from '@spyna/react-store'
 import './App.css';
 import './Sell.css';
 
-const buyFromSupplierRoute = 'http://localhost:8080/api/bananas';
+const endpoint = 'http://localhost:8080/api/bananas';
 
-function daysBetween(buyDate) {
+// Given a target date, return the number of days between now and target date
+function daysBetween(targetDate) {
   let now = new Date();
 
-  return Math.round(Math.abs((+buyDate) - (+now))/8.64e7);
+  return Math.round(Math.abs((+targetDate) - (+now))/8.64e7);
 };
 
 class Sell extends Component {
@@ -30,6 +31,7 @@ class Sell extends Component {
     this.setState({isLoaded: true});
   }
 
+  // return and updatesthe number of expired products in inventory
   getExpired () {
     let count = 0;
 
@@ -38,49 +40,53 @@ class Sell extends Component {
         count++;
       }
     });
-    console.log('expired count', count);
     this.props.store.set('expiredProducts', count);
     return count;
   }
 
-
   onSell(quantity) {
-    quantity = quantity | 0;
-    if (quantity < 1) {
-      alert('Must choose a quantity < 0');
-    }
-    else if (quantity > this.state.products.length) {
-      alert('You cant sell more than what is it stock.');
-    } else if (quantity > (this.state.products.length - this.getExpired())) {
-      alert('You dont have enough unexpired Products. Buy More Fresh Items.');
-    } else {
-    let rev = this.props.store.get('revenue') + 0.35*(quantity);
-    let date = new Date();
-    let today = date.getFullYear() +
-    '-' + `${date.getMonth() + 1}`.padStart(2, 0) +
-    '-' + `${date.getDate()}`.padStart(2, 0);
+    let productsAvailable;
+    let rev;
+    let date;
+    let today;
 
-      fetch(buyFromSupplierRoute,
+    this.getExpired();
+    productsAvailable = this.state.products.length - this.props.store.get('expiredProducts');
+
+    quantity = quantity | 0;
+
+    if (quantity < 1) {
+      alert('Must choose a quantity > 0');
+    }
+    else if (quantity > productsAvailable) {
+      alert('You cant sell more than what is Available.');
+    } else {
+      rev = this.props.store.get('revenue') + 0.35*(quantity);
+      date = new Date();
+      today = date.getFullYear() +
+        '-' + `${date.getMonth() + 1}`.padStart(2, 0) +
+        '-' + `${date.getDate()}`.padStart(2, 0);
+
+      fetch(endpoint,
         {
           method: 'PUT',
           headers: {
-               'Accept': 'application/json',
-               'Content-Type': 'application/json'
-             },
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
           body: JSON.stringify({
-            number: parseInt(quantity),
-            sellDate: today
+            sellDate: today,
+            number: parseInt(quantity)
           })
       }).then(res => {
         let sold = this.props.store.get('sold') + 1;
 
         this.getProducts();
         this.props.store.set('revenue', rev);
-        this.props.store.set('sold', sold);
+        this.props.store.set('soldProducts', sold);
       });
     }
   };
-
 
   render() {
     return (
@@ -89,31 +95,29 @@ class Sell extends Component {
           <div className="container-header">
             <h2>Track your sales</h2>
             <span>Inventory Items: {this.state.products.length}</span>{' | '}
-              <span>Revenue: $  {this.props.store.get('revenue')}</span>
-            </div>
-            <div className="add-product">
+            <span>Revenue: $  {this.props.store.get('revenue')}</span>
+          </div>
+          <div className="add-product">
             <SellProduct
               onSell={this.onSell}
               getProducts={this.getProducts} />
-            </div>
-
-            <div className="items">
+          </div>
+          <div className="items">
             {
               this.state.products.length > 0 ? (
-                  this.state.products.map(product => {
-                    return (
-                      <ProductItem
-                        key={product.id}
-                        id={product.id}
-                        buyDate={product.buyDate}
-                        sellDate={product.sellDate}
+                this.state.products.map(product => {
+                  return (
+                    <ProductItem
+                      key={product.id}
+                      id={product.id}
+                      buyDate={product.buyDate}
+                      sellDate={product.sellDate}
                       />
-                    )
-                  })
-                ) :
-                (<h4> You do not have any items in stock</h4>)
-              }
-        </div>
+                  )
+                })
+              ) : (<h4> You do not have any items in stock</h4>)
+            }
+          </div>
         </div>
       </div>
     );

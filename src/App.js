@@ -11,7 +11,7 @@ import Buy from './Buy';
 import Sell from './Sell';
 import Analytics from './Analytics';
 
-const endPoint = 'http://localhost:8080/api/bananas';
+const endpoint = 'http://localhost:8080/api/bananas';
 
 class App extends Component {
   constructor(props) {
@@ -30,36 +30,35 @@ class App extends Component {
      const products = this.getProducts();
      this.setState({ products });
    };
-   // Home is mounted on the route '/' so need to render home views
+
+   // Home is mounted on the route '/' so need to render home views with Toggle
    toggleHomeView() {
 
    };
 
+   // Fetch a list of products from API
    getProducts() {
-     return fetch(endPoint)
-           .then(res => res.json())
-           .then(json => {
-             this.setState({
-               isLoaded: true,
-               products: json
-             })
-           });
-   };
+     return fetch(endpoint)
+      .then(res => res.json())
+      .then(json => {
+        this.setState({
+          isLoaded: true,
+          products: json
+        })
+      });
+    };
 
-render() {
+  render() {
     return (
       <Router>
-        <div>
           <header className="App-header">
             <h1 className="header">My Store Dashboard</h1>
-
             <ul className="nav">
               <li>
                 <Link className="App-link" to="/" >HOME</Link>
               </li>
               <li>
-                <Link className="App-link" to="/buy">BUY
-                {}</Link>
+                <Link className="App-link" to="/buy">BUY</Link>
               </li>
               <li>
                 <Link className="App-link" to="/sell">SELL</Link>
@@ -68,42 +67,34 @@ render() {
                 <Link className="App-link" to="/analytics">ANALYTICS</Link>
               </li>
             </ul>
-        </header>
-
+          </header>
 
           <Route path="/" component={() => <Home/>} />
-          <Route
-            path="/buy"
-            component={ () => <Buy
+          <Route path="/buy" component={ () => <Buy
               products={this.state.products}
               revenue={this.state.revenue}
-              getProducts={this.getProducts}
-              />}
+              getProducts={this.getProducts}/>}
           />
           <Route path="/sell" component={ () => <Sell
-            products={this.state.products}
-            revenue={this.state.revenue}
-            getProducts={this.getProducts}
-            />}
-            />
+              products={this.state.products}
+              revenue={this.state.revenue}
+              getProducts={this.getProducts}/>}
+          />
           <Route path="/analytics" component={ () => <Analytics
-            products={this.state.products}
-            revenue={this.state.revenue}
-            getProducts={this.getProducts}
-            />}
-             />
-
-          </div>
+              products={this.state.products}
+              revenue={this.state.revenue}
+              getProducts={this.getProducts}/>}
+          />
       </Router>
     );
   }
 }
 
 const initVal = {
-  revenue: 0,
-  products: [],
+  allProducts: [],
   expiredProducts: 0,
-  sold: 0
+  soldProducts: 0,
+  revenue: 0
 }
 
 export default createStore(App, initVal);
