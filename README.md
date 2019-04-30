@@ -34,6 +34,7 @@ npm install
 ## Improvements to make
 * Set up test suite
 * Pagination for the product items, right now it uses a none-intuitive simple scroll
+* React props to make sure right vals are being passed
 * Fix Responsive behavior @media breakpoints
 * Run app in localStorageMode when there is no access to the DB
 * Accesibility
