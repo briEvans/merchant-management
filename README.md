@@ -1,68 +1,39 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Book Keeping Interface
 
-## Available Scripts
+This is a simple react book keeping interface built with node.js, react, react-router, and scss.
 
-In the project directory, you can run:
+## SET UP
 
-### `npm start`
+1. Install Node v8.70 and NPM
+ * https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+```sh
+node install
+```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Install Dependencies via NPM
+```sh
+npm install
+```
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## RUN APPLICATION
+1. `npm start` or `node .`
 
-### `npm test`
+## INTERFACE / VIEWS
+1. "Buy" view that records the purchase of products from a supplier
+![](img/book-keep-buy.gif)
+1. "Sell" view that records each time a product is sold
+![](img/book-keep-sell.gif)
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+1. "Analylitics" view showing:
+![](img/book-keep-analytics.jpg)
+    * Number of expired Products and unexpired Products
+    * Number of total sales
+    * Net Revenue
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Improvements to make
+* Set up test suite
+* Run app in localStorageMode when there is no access to the DB
+* Pagination for the product items, right now it uses a none-intuitive simple scroll
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```
