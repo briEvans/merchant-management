@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
 class ProductItem extends Component {
-  constructor(props) {
-    super(props);
-  };
 
   render() {
     const { id, buyDate, sellDate } = this.props;

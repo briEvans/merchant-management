@@ -153,10 +153,10 @@ input {
 
 .product-form {
   display: inline-block;
-  right: -21rem;
+  right: -18rem;
   position: relative;
   overflow: hidden;
-box-sizing: content-box;
+  box-sizing: content-box;
   -webkit-transition: all $transition-speed ease-in-out;
   -moz-transition: all $transition-speed ease-in-out;
   -o-transition: all $transition-speed ease-in-out;
@@ -186,6 +186,7 @@ box-sizing: content-box;
   font-size: 1.25rem;
   font-weight: 500;
   margin-bottom: 0.5rem;
+  min-width: 11rem;
 }
 
 // UTILITY STYLES

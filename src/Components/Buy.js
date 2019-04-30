@@ -23,7 +23,7 @@ class Buy extends Component {
     let today;
 
     if (quantity < 1) {
-      alert('Must choose a quantity < 0');
+      alert('Must choose a quantity > 0');
     } else {
 
     // Capture Today's date in the proper format

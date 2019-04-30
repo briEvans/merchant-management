@@ -4,9 +4,6 @@ import '../App.scss';
 import '../Analytics.scss';
 
 class Analytics extends Component {
-  constructor(props) {
-    super(props);
-  };
 
   render() {
     return (
