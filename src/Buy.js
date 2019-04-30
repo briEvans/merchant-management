@@ -27,7 +27,6 @@ class Buy extends Component {
   onAdd(quantity) {
     let date;
     let today;
-    let rev;
 
     if (quantity < 1) {
       alert('Must choose a quantity < 0');

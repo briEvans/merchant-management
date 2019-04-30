@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import AddProduct from './AddProduct';
 import { withStore } from '@spyna/react-store'
 
 import './App.css';

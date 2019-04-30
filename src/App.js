@@ -30,7 +30,7 @@ class App extends Component {
       allProducts: [],
       soldProducts: 0,
       expiredProducts: 0,
-      revenue: 0
+      revenue: 0,
      };
 
      this.getAllProducts = this.getAllProducts.bind(this);
@@ -94,6 +94,9 @@ class App extends Component {
     };
 
   render() {
+
+      const style = this.state.hideHomePage ? {display: 'none'} : {};
+
       return (
         <Router>
             <header className="App-header">
@@ -114,10 +117,12 @@ class App extends Component {
               </ul>
             </header>
 
-            <Route path="/" component={() => <Home/>} />
+            <Route path="/" component={() => <Home/>}
+            />
             <Route path="/buy" component={ () => <Buy
                 allProducts={this.state.allProducts}
                 getAllProducts={this.getAllProducts}
+                handleHomeToggle={this.handleHomeToggle}
                 revenue={this.state.revenue} />}
             />
             <Route path="/sell" component={ () => <Sell

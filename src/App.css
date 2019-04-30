@@ -46,6 +46,16 @@ ul > li {
 button {
   border-radius: 0.25rem;
   height: 2rem;
+  background-color: #32CD32;
+  border: none;
+  color: white;
+  font-weight: 600;
+}
+
+button:hover {
+  background-color: white;
+  color: black;
+  cursor: pointer;
 }
 
 .container {
@@ -128,7 +138,7 @@ input {
 
 .product-form {
   display: inline-block;
-  left: 18rem;
+  left: 23rem;
   position: relative;
 }
 

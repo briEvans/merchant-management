@@ -20,7 +20,6 @@ class Sell extends Component {
 
   onSell(quantity) {
     let productsAvailable;
-    let rev;
     let date;
     let today;
 
@@ -55,8 +54,6 @@ class Sell extends Component {
             number: parseInt(quantity)
           })
       }).then(res => {
-        let sold = this.props.store.get('sold') + 1;
-
         this.getAllProducts();
       });
     }
@@ -72,7 +69,7 @@ class Sell extends Component {
             <span className="general-stat">Revenue: ${this.props.revenue}</span>
           </div>
 
-          <div className="add-product">
+          <div className="product-form">
             <SellProduct
               onSell={this.onSell}
               getAllProducts={this.getAllProducts} />
