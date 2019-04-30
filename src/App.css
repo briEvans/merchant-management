@@ -126,26 +126,13 @@ input {
   color: red;
 }
 
-.add-product {
+.product-form {
   display: inline-block;
-  left: 14.5rem;
+  left: 18rem;
   position: relative;
 }
 
-.stat {
-  display: inline-block;
-  width: 10rem;
-  height: 10rem;
-  opacity: 0.7;
-  background-color: white;
-  font-size: 0.85rem;
-  padding: 1rem;
-  margin: 1rem;
-  overlow: hidden;
-}
-
-.number {
-  display: block;
-  font-size: 3rem;
-  font-weight: 600;
+.general-stat {
+  width: 5rem;
+  font-size: 1rem;
 }

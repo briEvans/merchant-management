@@ -13,6 +13,13 @@ import Analytics from './Analytics';
 
 const endpoint = 'http://localhost:8080/api/bananas';
 
+// Given a target date, return the number of days between target date and now
+function daysBetween(targetDate) {
+  let now = new Date();
+
+  return Math.round(Math.abs((+targetDate) - (+now))/8.64e7);
+};
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -20,80 +27,119 @@ class App extends Component {
     this.state = {
       isLoaded: false,
       localStorageMode: false,
-      products: []
+      allProducts: [],
+      soldProducts: 0,
+      expiredProducts: 0,
+      revenue: 0
      };
 
-     this.getProducts = this.getProducts.bind(this);
+     this.getAllProducts = this.getAllProducts.bind(this);
+     this.getExpiredProducts = this.getExpiredProducts.bind(this);
+     this.getSoldProducts = this.getSoldProducts.bind(this);
+     this.calculateRevenue = this.calculateRevenue.bind(this);
    };
 
-   componentWillMount() {
-     const products = this.getProducts();
-     this.setState({ products });
-   };
-
-   // Home is mounted on the route '/' so need to render home views with Toggle
-   toggleHomeView() {
-
-   };
+   componentDidMount() {
+     this.getAllProducts();
+     this.setState({ isLoaded: 'true'});
+    }
 
    // Fetch a list of products from API
-   getProducts() {
+   getAllProducts() {
      return fetch(endpoint)
       .then(res => res.json())
-      .then(json => {
+      .then(data => {
+        const expired = this.getExpiredProducts(data);
+        const sold = this.getSoldProducts(data);
+        const rev = this.calculateRevenue(data, this.getSoldProducts(data));
+
         this.setState({
-          isLoaded: true,
-          products: json
-        })
+          allProducts: data.reverse(),
+          expiredProducts: expired,
+          soldProducts: sold,
+          revenue: rev
+        }, () => console.log('state: ', this.state))
+        return data;
       });
     };
 
-  render() {
-    return (
-      <Router>
-          <header className="App-header">
-            <h1 className="header">My Store Dashboard</h1>
-            <ul className="nav">
-              <li>
-                <Link className="App-link" to="/" >HOME</Link>
-              </li>
-              <li>
-                <Link className="App-link" to="/buy">BUY</Link>
-              </li>
-              <li>
-                <Link className="App-link" to="/sell">SELL</Link>
-              </li>
-              <li>
-                <Link className="App-link" to="/analytics">ANALYTICS</Link>
-              </li>
-            </ul>
-          </header>
+    // return and update the number of sold products in inventory
+    getSoldProducts (allProducts) {
+      let count = 0;
 
-          <Route path="/" component={() => <Home/>} />
-          <Route path="/buy" component={ () => <Buy
-              products={this.state.products}
-              revenue={this.state.revenue}
-              getProducts={this.getProducts}/>}
-          />
-          <Route path="/sell" component={ () => <Sell
-              products={this.state.products}
-              revenue={this.state.revenue}
-              getProducts={this.getProducts}/>}
-          />
-          <Route path="/analytics" component={ () => <Analytics
-              products={this.state.products}
-              revenue={this.state.revenue}
-              getProducts={this.getProducts}/>}
-          />
-      </Router>
-    );
+      allProducts.forEach(product => {
+        if (product.sellDate === null) {
+          count++;
+        }
+      });
+      return allProducts.length - count;
+    }
+
+    // return and update the number of expired products in inventory
+    getExpiredProducts (allProducts) {
+      let count = 0;
+
+      allProducts.forEach(product => {
+        if (daysBetween(new Date(product.buyDate), new Date(product.sellDate)) > 10) {
+          count++;
+        }
+      });
+      return count;
+    };
+
+    calculateRevenue (allProducts, soldProducts) {
+       const rev = (soldProducts*0.35)
+       - (allProducts.length*0.25);
+        return Number(Math.round(rev+'e2')+'e-2');
+    };
+
+  render() {
+      return (
+        <Router>
+            <header className="App-header">
+              <h1 className="header">My Store Dashboard</h1>
+              <ul className="nav">
+                <li>
+                  <Link className="App-link" to="/" >HOME</Link>
+                </li>
+                <li>
+                  <Link className="App-link" to="/buy">BUY</Link>
+                </li>
+                <li>
+                  <Link className="App-link" to="/sell">SELL</Link>
+                </li>
+                <li>
+                  <Link className="App-link" to="/analytics">ANALYTICS</Link>
+                </li>
+              </ul>
+            </header>
+
+            <Route path="/" component={() => <Home/>} />
+            <Route path="/buy" component={ () => <Buy
+                allProducts={this.state.allProducts}
+                getAllProducts={this.getAllProducts}
+                revenue={this.state.revenue} />}
+            />
+            <Route path="/sell" component={ () => <Sell
+                allProducts={this.state.allProducts}
+                getAllProducts={this.getAllProducts}
+                soldProducts={this.state.soldProducts}
+                expiredProducts={this.state.expiredProducts}
+                revenue={this.state.revenue} />}
+            />
+            <Route path="/analytics" component={ () => <Analytics
+                allProducts={this.state.allProducts}
+                soldProducts={this.state.soldProducts}
+                expiredProducts={this.state.expiredProducts}
+                revenue={this.state.revenue}/>}
+            />
+        </Router>
+      );
   }
 }
 
-const initVal = {
-  allProducts: [],
-  expiredProducts: 0,
-  soldProducts: 0,
+// State to pass to the react-store object
+let initVal = {
   revenue: 0
 }
 

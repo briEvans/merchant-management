@@ -17,8 +17,7 @@ class AddProduct extends Component {
   render() {
 
     return (
-      <div className="add-product">
-      <form onSubmit={this.onSubmit}>
+      <form className="product-form" onSubmit={this.onSubmit}>
         <input
           type="number"
             placeholder="Quantity"
@@ -26,7 +25,6 @@ class AddProduct extends Component {
             />
       <button>Add Product</button>
       </form>
-      </div>
     );
   }
 }

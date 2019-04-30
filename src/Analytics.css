@@ -6,3 +6,21 @@
   border-radius: 1rem;
   padding: 5rem;
 }
+
+.analytics-stat {
+  display: inline-block;
+  width: 10rem;
+  height: 10rem;
+  opacity: 0.7;
+  background-color: white;
+  font-size: 0.85rem;
+  padding: 1rem;
+  margin: 1rem;
+  overlow: hidden;
+}
+
+.analytics-num {
+  display: block;
+  font-size: 3rem;
+  font-weight: 600;
+}

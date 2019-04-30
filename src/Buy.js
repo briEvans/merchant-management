@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ProductItem from './ProductItem';
 import AddProduct from './AddProduct';
+
 import { withStore } from '@spyna/react-store'
 
 // Internal Routes
@@ -15,10 +16,10 @@ class Buy extends Component {
 
     this.state = {
       isLoaded: false,
-      products: props.products
     };
 
-    this.getProducts = props.getProducts.bind(this);
+    console.log('all props: ', props);
+    this.getAllProducts = props.getAllProducts.bind(this);
     this.onAdd = this.onAdd.bind(this);
   };
 
@@ -31,9 +32,6 @@ class Buy extends Component {
     if (quantity < 1) {
       alert('Must choose a quantity < 0');
     } else {
-
-    // Calculate the new revenue value
-    rev = this.props.store.get('revenue') - quantity*0.25;
 
     // Capture Today's date in the proper format
     date = new Date();
@@ -56,8 +54,7 @@ class Buy extends Component {
             number: parseInt(quantity)
           })
         }).then(res => {
-          this.getProducts();
-          this.props.store.set('revenue', rev);
+          this.getAllProducts();
         });
       }
     };
@@ -67,22 +64,21 @@ render() {
     <div className="container">
       <div className="container-center">
         <div className="container-header">
-          <h2>Buy from your supplier</h2>
-          <span>Inventory Items: {this.state.products.length}</span>{' | '}
-            <span>Revenue: ${this.props.store.get('revenue')}</span>
+          <h2>Buy from supplier</h2>
+          <span className="general-stat">Inventory Items: {this.props.allProducts.length}</span>{' | '}
+            <span className="general-stat">Revenue: ${this.props.revenue}</span>
         </div>
 
         {
           <AddProduct
             onAdd={this.onAdd}
-            getProducts={this.getProducts}
+            getAllProducts={this.getAllProducts}
             />
         }
-
         <div className="items">
           {
-            this.state.products.length > 0 ? (
-              this.state.products.map(product => {
+            this.props.allProducts.length > 0 ? (
+              this.props.allProducts.map(product => {
                 return (
                   <ProductItem
                     key={product.id}
