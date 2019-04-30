@@ -20,13 +20,13 @@ npm install
 
 ## INTERFACE / VIEWS
 1. "Buy" view that records the purchase of products from a supplier
-![](img/book-keep-buy.gif)
+![](public/img/book-keep-buy.gif)
 1. "Sell" view that records each time a product is sold
-![](img/book-keep-sell.gif)
+![](public/img/book-keep-sell.gif)
 
 
 1. "Analylitics" view showing:
-![](img/book-keep-analytics.jpg)
+![](public/img/book-keep-analytics.png)
     * Number of expired Products and unexpired Products
     * Number of total sales
     * Net Revenue
