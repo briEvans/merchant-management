@@ -3,10 +3,6 @@ import React, { Component } from 'react';
 class ProductItem extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      button: props.button
-    }
   };
 
   render() {
@@ -15,10 +11,9 @@ class ProductItem extends Component {
     return (
       <div>
         <div className="item">
-        <span className="col">{id}</span>
-        <b>Buy Date:</b> {buyDate} {' | '}
-        {sellDate ? <div className="red"> Sold on {sellDate}</div> : <span className="green">In Stock</span>}
-        {this.state.button}
+          <span className="col">{id}</span>
+          <b>Buy Date:</b> {buyDate} {' | '}
+          {sellDate ? <div className="red"> Sold on {sellDate}</div> : <span className="green">In Stock</span>}
         </div>
       </div>
     );

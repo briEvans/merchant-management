@@ -1,0 +1,198 @@
+$dark-gray-color: #303030; // Dark Gray
+$button-color: #32CD32; // Green
+
+$transition-speed: 0.5s;
+
+// GENERAL STYLING
+html, body {
+  color: white;
+  font-family: Helvetica, Arial, Sans-Serif;
+  font-weight: 400;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+body.noScroll {
+  overflow: hidden;
+}
+
+header {
+  background-color: $dark-gray-color;
+  display: block;
+  font-weight: 500;
+  height: 4rem;
+  position: fixed;
+  text-align: center;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+h1 {
+  display: inline-block;
+  font-size: 1.5rem;
+}
+
+ul > li {
+  display: inline-block;
+  list-style: none;
+  margin-right: 0.5rem;
+}
+
+.app-link {
+  color: white;
+  display: inline-block;
+  z-index: 1000;
+}
+
+button {
+  background-color: $button-color;
+  border: none;
+  border-radius: 0.25rem;
+  color: white;
+  font-weight: 600;
+  height: 2rem;
+
+  &:hover {
+    background-color: white;
+    color: $dark-gray-color;
+    cursor: pointer;
+  }
+}
+
+// CONTAINER STYLING
+
+.container {
+  color: $dark-gray-color;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 100%;
+  z-index: 998;
+
+  @media only screen and (max-width: 768px) {
+    margin: 0.5rem;
+  }
+}
+
+.container-center {
+  display: inline-block;
+  margin: 0 auto;
+  padding-top: 7rem;
+  text-align: left;
+}
+
+.container-header {
+  display: inline-block;
+
+  h2 {
+    height: 4rem;
+    margin-bottom: -1.5rem;
+    overflow: hidden;
+    text-transform: uppercase;
+  }
+}
+
+.item {
+  background-color: white;
+  border: 1px solid $dark-gray-color;
+  border-radius: 0.15rem;
+  color: $dark-gray-color;
+  display: inline-block;
+
+  margin: 0.25rem;
+  opacity: 0.8;
+  padding: 0.5rem;
+  text-align: left;
+  width: 50rem;
+
+  @media only screen and (max-width: 768px) {
+    max-width: 90vw;
+
+  }
+
+  -webkit-transition: all $transition-speed ease-in-out;
+  -moz-transition: all $transition-speed ease-in-out;
+  -o-transition: all $transition-speed ease-in-out;
+  transition: all $transition-speed ease-in-out;
+}
+
+.col {
+  display: block;
+  margin-right: 1rem;
+  padding-right: 0.5rem;
+}
+
+.items {
+  border-top: 1px solid #303030;
+  display: block;
+  height: 30rem;
+  opacity: 0.9;
+  overflow-x: visible;
+  overflow-y: scroll;
+  position: relative;
+  top: 50%;
+}
+
+form {
+  box-sizing : border-box;
+}
+
+input {
+  box-sizing : border-box;
+  margin:  0.5rem;
+  padding: 0.5rem  0.5rem;
+  width: 5rem;
+  -webkit-appearance: none;
+}
+
+.product-form {
+  display: inline-block;
+  right: -18rem;
+  position: relative;
+  overflow: hidden;
+box-sizing: content-box;
+  -webkit-transition: all $transition-speed ease-in-out;
+  -moz-transition: all $transition-speed ease-in-out;
+  -o-transition: all $transition-speed ease-in-out;
+  transition: all $transition-speed ease-in-out;
+
+  @media only screen and (max-width: 768px) {
+    right: 0rem;
+    width: 95vw;
+
+    input {
+      border: none;
+      margin: 0;
+      width: 100%;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+    }
+  }
+}
+
+// Ex: Revenue and Items
+.general-stat {
+  display: inline-block;
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+// UTILITY STYLES
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}

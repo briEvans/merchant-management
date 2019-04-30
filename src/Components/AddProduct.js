@@ -5,9 +5,11 @@ class AddProduct extends Component {
     super(props);
 
     this.onSubmit = this.onSubmit.bind(this);
-
   };
 
+  /* {@func} onSubmit- Handler for product form
+   * @params {Object} ev, the event
+   */
   onSubmit(ev) {
     ev.preventDefault();
     this.props.onAdd(this.quantityInput.value);
@@ -20,10 +22,10 @@ class AddProduct extends Component {
       <form className="product-form" onSubmit={this.onSubmit}>
         <input
           type="number"
-            placeholder="Quantity"
-            ref={quantityInput => {this.quantityInput = quantityInput}}
-            />
-      <button>Add Product</button>
+          placeholder="Quantity"
+          ref={quantityInput => {this.quantityInput = quantityInput}}
+        />
+        <button>Add Product</button>
       </form>
     );
   }

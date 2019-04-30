@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import './App.css';
-
-// State Management Library
-import { createStore } from '@spyna/react-store'
+import './App.scss';
 
 // Internal Routes
-import Home from './Home';
-import Buy from './Buy';
-import Sell from './Sell';
-import Analytics from './Analytics';
+import Home from './Components/Home';
+import Buy from './Components/Buy';
+import Sell from './Components/Sell';
+import Analytics from './Components/Analytics';
 
 const endpoint = 'http://localhost:8080/api/bananas';
 
-// Given a target date, return the number of days between target date and now
+
+/* {@func} daysBetween - calculcate the # of days between targetDate and now
+ * @params {Date} targetDate a date in milliseconds
+ * @return {Number} the number of days between targetDate and now
+*/
 function daysBetween(targetDate) {
   let now = new Date();
 
@@ -44,7 +45,10 @@ class App extends Component {
      this.setState({ isLoaded: 'true'});
     }
 
-   // Fetch a list of products from API
+
+   /* {@func} getAllProducts - fetches list of products and updates the state
+    * @return {Object} Array of objects
+    */
    getAllProducts() {
      return fetch(endpoint)
       .then(res => res.json())
@@ -58,12 +62,15 @@ class App extends Component {
           expiredProducts: expired,
           soldProducts: sold,
           revenue: rev
-        }, () => console.log('state: ', this.state))
+        });
         return data;
       });
     };
 
-    // return and update the number of sold products in inventory
+   /* {@func} getSoldProducts - Returns the number of sold products
+    * @params {object} allProducts, an array of all objects
+    * @return {Number} the number of products sold
+    */
     getSoldProducts (allProducts) {
       let count = 0;
 
@@ -75,7 +82,10 @@ class App extends Component {
       return allProducts.length - count;
     }
 
-    // return and update the number of expired products in inventory
+    /* {@func} getExpiredProducts - Returns the number of expired products
+     * @params {object} allProducts, an array of all objects
+     * @return {Number} the number of products that are expired
+     */
     getExpiredProducts (allProducts) {
       let count = 0;
 
@@ -87,44 +97,47 @@ class App extends Component {
       return count;
     };
 
-    calculateRevenue (allProducts, soldProducts) {
+    /* {@func} calculateRevenue - Calculate net revenue
+     * @params {object} allProducts, an array of all products
+     * @params {object} soldProducts, an array of sold products
+     * @return {Number} the net revenue
+     */
+     calculateRevenue (allProducts, soldProducts) {
        const rev = (soldProducts*0.35)
-       - (allProducts.length*0.25);
+       - (allProducts.length*0.20);
         return Number(Math.round(rev+'e2')+'e-2');
     };
 
-  render() {
-
-      const style = this.state.hideHomePage ? {display: 'none'} : {};
-
+    render() {
       return (
         <Router>
             <header className="App-header">
               <h1 className="header">My Store Dashboard</h1>
               <ul className="nav">
                 <li>
-                  <Link className="App-link" to="/" >HOME</Link>
+                  <Link className="app-link" to="/" >HOME</Link>
                 </li>
                 <li>
-                  <Link className="App-link" to="/buy">BUY</Link>
+                  <Link className="app-link" to="/buy">BUY</Link>
                 </li>
                 <li>
-                  <Link className="App-link" to="/sell">SELL</Link>
+                  <Link className="app-link" to="/sell">SELL</Link>
                 </li>
                 <li>
-                  <Link className="App-link" to="/analytics">ANALYTICS</Link>
+                  <Link className="app-link" to="/analytics">ANALYTICS</Link>
                 </li>
               </ul>
             </header>
 
             <Route path="/" component={() => <Home/>}
             />
+
             <Route path="/buy" component={ () => <Buy
                 allProducts={this.state.allProducts}
                 getAllProducts={this.getAllProducts}
-                handleHomeToggle={this.handleHomeToggle}
                 revenue={this.state.revenue} />}
             />
+
             <Route path="/sell" component={ () => <Sell
                 allProducts={this.state.allProducts}
                 getAllProducts={this.getAllProducts}
@@ -140,12 +153,7 @@ class App extends Component {
             />
         </Router>
       );
-  }
+    }
 }
 
-// State to pass to the react-store object
-let initVal = {
-  revenue: 0
-}
-
-export default createStore(App, initVal);
+export default App;

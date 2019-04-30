@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import ProductItem from './ProductItem';
-import AddProduct from './AddProduct';
-
-import { withStore } from '@spyna/react-store'
 
 // Internal Routes
-import './App.css';
-import './Buy.css';
+import ProductItem from './ProductItem';
+import AddProduct from './AddProduct';
+import '../App.scss';
 
 const endpoint = 'http://localhost:8080/api/bananas';
 
@@ -14,16 +11,13 @@ class Buy extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isLoaded: false,
-    };
-
-    console.log('all props: ', props);
     this.getAllProducts = props.getAllProducts.bind(this);
     this.onAdd = this.onAdd.bind(this);
   };
 
-  // Handler for purchasing a new Product
+  /* {@func} onAdd - Handler for adding a new product
+   * @params {Number} quantity of products to add
+   */
   onAdd(quantity) {
     let date;
     let today;
@@ -97,4 +91,4 @@ render() {
   }
 }
 
-export default withStore(Buy);
+export default Buy;

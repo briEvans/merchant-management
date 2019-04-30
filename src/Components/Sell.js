@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
+
+// Internal Routes
 import ProductItem from './ProductItem';
 import SellProduct from './SellProduct';
-import { withStore } from '@spyna/react-store'
-
-import './App.css';
-import './Sell.css';
+import '../App.scss';
 
 const endpoint = 'http://localhost:8080/api/bananas';
 
@@ -14,10 +13,11 @@ class Sell extends Component {
 
     this.getAllProducts = props.getAllProducts.bind(this);
     this.onSell = this.onSell.bind(this);
-    this.sellPro = this.onSell.bind(this);
-
   };
 
+  /* {@func} onSell - Handler for selling a product
+   * @params {Number} quantity of products to sell
+   */
   onSell(quantity) {
     let productsAvailable;
     let date;
@@ -27,8 +27,6 @@ class Sell extends Component {
       - this.props.expiredProducts
       - this.props.soldProducts;
 
-      console.log('\navail: ', productsAvailable,
-    '\nall length: ', this.props.allProducts.length, '\nexpired: ', this.props.expiredProducts, '\nsolkd: ',this.props.soldProducts );
     quantity = quantity | 0;
 
     if (quantity < 1) {
@@ -69,11 +67,9 @@ class Sell extends Component {
             <span className="general-stat">Revenue: ${this.props.revenue}</span>
           </div>
 
-          <div className="product-form">
-            <SellProduct
-              onSell={this.onSell}
-              getAllProducts={this.getAllProducts} />
-          </div>
+          <SellProduct
+            onSell={this.onSell}
+            getAllProducts={this.getAllProducts} />
 
           <div className="items">
             {
@@ -97,4 +93,4 @@ class Sell extends Component {
   }
 }
 
-export default withStore(Sell);
+export default Sell;

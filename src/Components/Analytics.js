@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-import { withStore } from '@spyna/react-store'
 
-import './App.css';
-import './Analytics.css';
+import '../App.scss';
+import '../Analytics.scss';
 
 class Analytics extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      isLoaded: false
-    };
   };
 
   render() {
@@ -43,4 +38,4 @@ class Analytics extends Component {
   }
 }
 
-export default withStore(Analytics);
+export default Analytics;
