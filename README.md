@@ -38,4 +38,5 @@ npm install
 * Fix Responsive behavior @media breakpoints
 * Run app in localStorageMode when there is no access to the DB
 * Accesibility
+* Stylistically differentiate between Buy and Sell View
 ```
