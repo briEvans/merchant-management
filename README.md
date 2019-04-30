@@ -33,7 +33,8 @@ npm install
 
 ## Improvements to make
 * Set up test suite
-* Run app in localStorageMode when there is no access to the DB
 * Pagination for the product items, right now it uses a none-intuitive simple scroll
-
+* Fix Responsive behavior @media breakpoints
+* Run app in localStorageMode when there is no access to the DB
+* Accesibility
 ```
